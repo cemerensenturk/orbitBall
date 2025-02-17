@@ -1,14 +1,15 @@
 body {
     text-align: center;
     font-family: Arial, sans-serif;
-    background: url(photo1.jpg);
+    background: url(./img/photo1.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    transition: background-image 1s ease;
 }
 
 canvas {
     border: 2px solid black;
-    background-color: lightgreen;
+    background-color: #4c8527;
     margin-top: 20px;
     border-radius: 50%;
 }
@@ -28,8 +29,8 @@ label {
     padding: 5px;
     border: 2px black solid;
     border-radius: 20px;
-    margin-top: 3%;
-    margin-bottom: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .team-selection{
@@ -57,7 +58,7 @@ label {
 }
 
 #goal-history {
-    max-height: 200px;
+    max-height: 120px;
     overflow-y: auto;
     margin: 10px;
     padding: 5px;

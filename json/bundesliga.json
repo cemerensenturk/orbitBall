@@ -1,0 +1,86 @@
+{
+    "bayern-munich": {
+      "name": "Bayern Munich",
+      "league": "bundesliga",
+      "competitions": ["bundesliga", "ucl"],
+      "colors": ["#D60000", "#F1C300"],
+      "initial": "BM"
+    },
+    "borussia-dortmund": {
+      "name": "Borussia Dortmund",
+      "league": "bundesliga",
+      "competitions": ["bundesliga", "ucl"],
+      "colors": ["#F1E500", "#000000"],
+      "initial": "BD"
+    },
+    "rb-leipzig": {
+      "name": "RB Leipzig",
+      "league": "bundesliga",
+      "competitions": ["bundesliga", "ucl"],
+      "colors": ["#D1001F", "#003DA5"],
+      "initial": "RBL"
+    },
+    "bayer-leverkusen": {
+      "name": "Bayer Leverkusen",
+      "league": "bundesliga",
+      "competitions": ["bundesliga", "ucl"],
+      "colors": ["#E4002B", "#000000"],
+      "initial": "B04"
+    },
+    "wolfsburg": {
+      "name": "Wolfsburg",
+      "league": "bundesliga",
+      "competitions": ["bundesliga"],
+      "colors": ["#006F3C", "#FFFFFF"],
+      "initial": "WOB"
+    },
+    "borussia-monchengladbach": {
+      "name": "Borussia Mönchengladbach",
+      "league": "bundesliga",
+      "competitions": ["bundesliga"],
+      "colors": ["#000000", "#006B3F"],
+      "initial": "BMG"
+    },
+    "heidenheim": {
+      "name": "Heidenheim",
+      "league": "bundesliga",
+      "competitions": ["bundesliga","uecl"],
+      "colors": ["#FF0000", "#001D4D"],
+      "initial": "HEI"
+    },
+    "hoffenheim": {
+      "name": "Hoffenheim",
+      "league": "bundesliga",
+      "competitions": ["bundesliga","uel"],
+      "colors": ["#1C6F87", "#E60012"],
+      "initial": "HOF"
+    },
+    "schalke": {
+      "name": "Schalke",
+      "league": "bundesliga",
+      "competitions": ["bundesliga"],
+      "colors": ["#00509E", "#FFFFFF"],
+      "initial": "S04"
+    },
+    "eintracht-frankfurt": {
+      "name": "Eintracht Frankfurt",
+      "league": "bundesliga",
+      "competitions": ["bundesliga", "uel"],
+      "colors": ["#9B1F30", "#F1C300"],
+      "initial": "F"
+    },
+    "stuttgart": {
+      "name": "VfB Stuttgart",
+      "league": "bundesliga",
+      "competitions": ["bundesliga","ucl"],
+      "colors": ["#9B1F30", "#FFFFFF"],
+      "initial": "S"
+    },
+    "hertha-berlin": {
+      "name": "Hertha BSC",
+      "league": "bundesliga",
+      "competitions": ["bundesliga"],
+      "colors": ["#002D6D", "#FFFFFF"],
+      "initial": "HB"
+    }
+  }

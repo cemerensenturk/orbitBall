@@ -10,31 +10,35 @@
     <div class="control-center">
         <h1>OrbitBall by Kafeinal</h1>
         <div class="team-selection">
+            <div class="filter-section">
+                <label for="filter-category">League:</label>
+                <select id="filter-category" onchange="filterTeams()">
+                    <option value="all">All Teams</option>
+                    <optgroup label="Leagues">
+                        <option value="premier-league">Premier League</option>
+                        <option value="la-liga">La Liga</option>
+                        <option value="bundesliga">Bundesliga</option>
+                        <option value="serie-a">Serie A</option>
+                        <option value="ligue-1">Ligue 1</option>
+                        <option value="super-lig">Trendyol Süper Lig</option>
+                        <option value="others">Other Teams</option>
+                    </optgroup>
+                    <optgroup label="Tournaments">
+                        <option value="ucl">UEFA Champions League</option>
+                        <option value="uel">UEFA Europa League</option>
+                        <option value="uecl">UEFA Conference League</option>
+                    </optgroup>
+                </select>
+            </div>
             <label for="team1">Team 1:
                 <select id="team1-select">
-                    <option value="barcelona">Barcelona</option>
-                    <option value="real-madrid">Real Madrid</option>
-                    <option value="manchester-united">Manchester United</option>
-                    <option value="liverpool">Liverpool</option>
-                    <option value="bayern-munich">Bayern Munich</option>
-                    <option value="juventus">Juventus</option>
-                    <option value="inter-milan">Inter Milan</option>
-                    <option value="chelsea">Chelsea</option>
-                    <option value="psg">Paris Saint-Germain</option>
+                    
                 </select>
             </label>
 
             <label for="team2">Team 2:
                 <select id="team2-select">
-                    <option value="barcelona">Barcelona</option>
-                    <option value="real-madrid">Real Madrid</option>
-                    <option value="manchester-united">Manchester United</option>
-                    <option value="liverpool">Liverpool</option>
-                    <option value="bayern-munich">Bayern Munich</option>
-                    <option value="juventus">Juventus</option>
-                    <option value="inter-milan">Inter Milan</option>
-                    <option value="chelsea">Chelsea</option>
-                    <option value="psg">Paris Saint-Germain</option>
+                    
                 </select>
             </label>
 

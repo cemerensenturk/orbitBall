@@ -1,0 +1,80 @@
+{
+    "paris-saint-germain": {
+      "name": "Paris Saint-Germain",
+      "league": "ligue-1",
+      "competitions": ["ligue-1", "ucl"],
+      "colors": ["#DA291C", "#0050A4"],
+      "initial": "PSG"
+    },
+    "olympique-lyonnais": {
+      "name": "Olympique Lyonnais",
+      "league": "ligue-1",
+      "competitions": ["ligue-1","uel"],
+      "colors": ["#C8102E", "#002F6C"],
+      "initial": "OL"
+    },
+    "marseille": {
+      "name": "Marseille",
+      "league": "ligue-1",
+      "competitions": ["ligue-1"],
+      "colors": ["#0079C1", "#FFFFFF"],
+      "initial": "OM"
+    },
+    "monaco": {
+      "name": "Monaco",
+      "league": "ligue-1",
+      "competitions": ["ligue-1", "ucl"],
+      "colors": ["#F1C300", "#9E1B32"],
+      "initial": "ASM"
+    },
+    "lille": {
+      "name": "Lille",
+      "league": "ligue-1",
+      "competitions": ["ligue-1", "ucl"],
+      "colors": ["#003C5F", "#F5B900"],
+      "initial": "LL"
+    },
+    "bordeaux": {
+      "name": "Bordeaux",
+      "league": "ligue-1",
+      "competitions": ["ligue-1"],
+      "colors": ["#003B5C", "#9E1B32"],
+      "initial": "BOR"
+    },
+    "nice": {
+      "name": "Nice",
+      "league": "ligue-1",
+      "competitions": ["ligue-1","uel"],
+      "colors": ["#B71C1C", "#FFFFFF"],
+      "initial": "N"
+    },
+    "saint-etienne": {
+      "name": "Saint-Étienne",
+      "league": "ligue-1",
+      "competitions": ["ligue-1"],
+      "colors": ["#006747", "#FFFFFF"],
+      "initial": "ASE"
+    },
+    "rennes": {
+      "name": "Rennes",
+      "league": "ligue-1",
+      "competitions": ["ligue-1"],
+      "colors": ["#EE1C25", "#000000"],
+      "initial": "RE"
+    },
+    "brest": {
+      "name": "Brest",
+      "league": "ligue-1",
+      "competitions": ["ligue-1","ucl"],
+      "colors": ["#E40000", "#1C1C1C"],
+      "initial": "BR"
+    },
+    "lens": {
+      "name": "Lens",
+      "league": "ligue-1",
+      "competitions": ["ligue-1"],
+      "colors": ["#D1001F", "#F7C70C"],
+      "initial": "RCL"
+    }
+  }
+  

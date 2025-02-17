@@ -13,7 +13,6 @@ let team2 = { x: 230, y: 200, dx: getRandomSpeed(), dy: getRandomSpeed()};
 let goal = { x: 200, y: 50, width: 30, height: 10, angle: 0, speed: 0.8 };
 let score = [0, 0];
 let time = 0;
-let gameInterval;
 let timeInterval;
 let gameRunning = false;
 let ballRadius = 20;
@@ -21,23 +20,74 @@ let goalWidth = 15;  // Kale genişliği
 let goalHeight = 50; // Kale yüksekliği
 let goalRadius = 180; // Kale merkezinin dönme mesafesi
 
-function startGame() {
-    if (gameRunning) return; // Eğer oyun zaten başlıyorsa tekrar başlatma
-
-    // Takım seçimlerini al ve renkleri belirle
-    let team1Selection = document.getElementById("team1-select").value;
-    let team2Selection = document.getElementById("team2-select").value;
+// Kategorileri tanımlayalım
+const categories = {
+    // Ligler
+    "premier-league": "Premier League",
+    "la-liga": "La Liga",
+    "bundesliga": "Bundesliga",
+    "serie-a": "Serie A",
+    "ligue-1": "Ligue 1",
+    "super-lig": "Trendyol Süper Lig",
     
+    // Turnuvalar
+    "ucl": "UEFA Champions League",
+    "uel": "UEFA Europa League",
+    "uecl": "UEFA Conference League",
+    
+    // Özel kategoriler
+    "all": "All Teams"
+};
+
+// Takımları yüklemek için temsili bir nesne
+let teamsDatabase = {};
+
+// Tüm JSON dosyalarını yükleyip teamsDatabase'e ekleyen fonksiyon
+async function loadAllTeams() {
+    const jsonFiles = [
+        'premier.json',
+        'laliga.json',
+        'bundesliga.json',
+        'seriea.json',
+        'ligue1.json',
+        'trendyol.json',
+        'others.json'
+    ];
+    
+    // Tüm dosyaları sırayla yükle
+    for (const file of jsonFiles) {
+        try {
+            const response = await fetch(`./json/${file}`);
+            if (!response.ok) throw new Error(`${file} yüklenemedi: ${response.status}`);
+            
+            const data = await response.json();
+            // Her bir takımı teamsDatabase'e ekle
+            for (const teamId in data) {
+                teamsDatabase[teamId] = data[teamId];
+            }
+        } catch (error) {
+            console.error(`${file} yüklenirken hata oluştu:`, error);
+        }
+    }
+    
+    // Tüm takımlar yüklendikten sonra arayüzü güncelle
+    filterTeams();
+}
+
+function startGame() {
+    if (gameRunning) return;
+
     let team1Name = document.getElementById("team1-select").value;
     let team2Name = document.getElementById("team2-select").value;
 
-    team1.color = teamColors[team1Name];
-    team1.initial = teamInitials[team1Name];
+    // Veritabanımızdan takım özelliklerini al
+    team1.color = teamsDatabase[team1Name].colors;
+    team1.initial = teamsDatabase[team1Name].initial;
 
-    team2.color = teamColors[team2Name];
-    team2.initial = teamInitials[team2Name];
+    team2.color = teamsDatabase[team2Name].colors;
+    team2.initial = teamsDatabase[team2Name].initial;
 
-    document.getElementById("goal-history").innerHTML = "";
+    document.getElementById("goal-history").innerHTML = "<h3>Goal History</h3>";
 
     gameRunning = true;
     score = [0, 0];
@@ -47,32 +97,9 @@ function startGame() {
 
     clearInterval(timeInterval);
     timeInterval = setInterval(updateTime, 500);
-    gameLoop(); // Oyun döngüsünü başlat
+    resetPositions();
+    gameLoop();
 }
-
-const teamColors = {
-    "barcelona": ["#A50044", "#004D98"],
-    "real-madrid": ["#FFFFFF", "#FFFFFF"],
-    "manchester-united": ["#DA291C", "#DA291C"],
-    "liverpool": ["#C8102E", "#C8102E"],
-    "bayern-munich": ["#004F9E", "#D50032"],
-    "juventus": ["#FFFFFF", "#FFFFFF"],
-    "inter-milan": ["#0033A0", "#0033A0"],
-    "chelsea": ["#034694", "#FFFFFF"],
-    "psg": ["#004170", "#DA291C"]
-};
-
-const teamInitials = {
-    "barcelona": "B",
-    "real-madrid": "R",
-    "manchester-united": "M",
-    "liverpool": "L",
-    "bayern-munich": "BM",
-    "juventus": "J",
-    "inter-milan": "I",
-    "chelsea": "C",
-    "psg": "P"
-};
 
 function drawDualColorCircle(x, y, radius, colors, teamInitial) {
     // Üst yarıyı çiz
@@ -100,6 +127,54 @@ function drawTeams() {
     drawDualColorCircle(team2.x, team2.y, ballRadius, team2.color, team2.initial);
 }
 
+function filterTeams() {
+    const selectedCategory = document.getElementById("filter-category").value;
+    const team1Select = document.getElementById("team1-select");
+    const team2Select = document.getElementById("team2-select");
+    
+    // Mevcut seçimleri kaydet
+    const team1Current = team1Select.value;
+    const team2Current = team2Select.value;
+    
+    // Seçim kutularını temizle
+    team1Select.innerHTML = "";
+    team2Select.innerHTML = "";
+    
+    // Filtreleme ve ekleme
+    for (const teamId in teamsDatabase) {
+        const team = teamsDatabase[teamId];
+        
+        // Tüm takımlar seçildiğinde veya takım bu kategoride ise
+        if (selectedCategory === "all" || 
+            team.league === selectedCategory || 
+            team.competitions.includes(selectedCategory)) {
+            
+            // Takım 1 seçim kutusuna ekle
+            const option1 = document.createElement("option");
+            option1.value = teamId;
+            option1.textContent = team.name;
+            team1Select.appendChild(option1);
+            
+            // Takım 2 seçim kutusuna ekle
+            const option2 = document.createElement("option");
+            option2.value = teamId;
+            option2.textContent = team.name;
+            team2Select.appendChild(option2);
+        }
+    }
+    
+    // Önceki seçimleri korumaya çalış (eğer hala filtrelenen takımlar arasındaysa)
+    if (Array.from(team1Select.options).some(opt => opt.value === team1Current)) {
+        team1Select.value = team1Current;
+    }
+    
+    if (Array.from(team2Select.options).some(opt => opt.value === team2Current)) {
+        team2Select.value = team2Current;
+    }
+
+    //changeBackground(selectedCategory);
+}
+
 function drawGoal() {
     let radian = (goal.angle * Math.PI) / 180;
 
@@ -115,7 +190,7 @@ function drawGoal() {
     // Kaleyi çizme (kalenin uzun kenarı orijine bakacak şekilde)
     ctx.beginPath();
     ctx.rect(-goalWidth / 2, -goalHeight / 2, goalWidth, goalHeight);
-    ctx.fillStyle = "yellow";
+    ctx.fillStyle = "white";
     ctx.fill();
     ctx.closePath();
 
@@ -146,11 +221,10 @@ function updateScore(scorer = null) {
     
     // Golü atan takımın tam adını bul
     let scorerTeamName = "";
-    for (let team in teamInitials) {
-        if (teamInitials[team] === scorer) {
-            scorerTeamName = team.split('-')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
+    // Takım veritabanından takım adını bulalım
+    for (let teamId in teamsDatabase) {
+        if (teamsDatabase[teamId].initial === scorer) {
+            scorerTeamName = teamsDatabase[teamId].name;
             break;
         }
     }
@@ -182,16 +256,22 @@ function updatePositions() {
                 updateScore(team2.initial);
             }
             
-            gameRunning = false; 
+            // Oyunu duraklatıyoruz
+            gameRunning = false;
 
+            // Konumları sıfırlıyoruz
+            resetPositions();
+
+            // Kısa bir beklemeden sonra oyunu devam ettiriyoruz
             setTimeout(() => {
-                resetPositions();  
-                gameRunning = true;
-                gameLoop();
+                if (time < 90) { // Süre bitmemişse oyunu devam ettir
+                    gameRunning = true;
+                    gameLoop();
+                }
             }, 1000);
         }
 
-
+        // Sahadan çıkmasını engelliyoruz
         let distanceToCenter = Math.hypot(team.x - 200, team.y - 200);
         if (distanceToCenter >= 180) {
             let angle = Math.atan2(team.y - 200, team.x - 200);
@@ -218,11 +298,8 @@ function resetPositions() {
     team2.dx = getRandomSpeed();
     team2.dy = getRandomSpeed();
 
-    goal.x = 200;
-    goal.y = 50;
     goal.angle = 0;
 }
-
 
 function handleCollision(ball1, ball2) {
     let dx = ball2.x - ball1.x;
@@ -258,7 +335,6 @@ function handleCollision(ball1, ball2) {
     }
 }
 
-
 function updateTime() {
     if (time < 90) {
         time++;
@@ -281,3 +357,57 @@ function gameLoop() {
     updatePositions();
     requestAnimationFrame(gameLoop);
 }
+/*
+function changeBackground(category) {
+    const body = document.body;
+    
+    // Önce mevcut geçiş animasyonu tamamlansın
+    body.style.transition = "background-image 1s ease";
+    
+    // Kategori/lige göre arkaplan resmini belirle
+    let newBackground = "url(./img/photo1.jpg)";
+    
+    switch(category) {
+      case "premier-league":
+        newBackground = "url(./img/premier_league.jpg)";
+        break;
+      case "la-liga":
+        newBackground = "url(./img/la_liga.jpg)";
+        break;
+      case "bundesliga":
+        newBackground = "url(./img/bundesliga.jpg)";
+        break;
+      case "serie-a":
+        newBackground = "url(./img/serie-a.jpg)";
+        break;
+      case "ligue-1":
+        newBackground = "url(./img/ligue_1.jpg)";
+        break;
+      case "super-lig":
+        newBackground = "url(./img/superlig.jpg)";
+        break;
+      case "ucl":
+        newBackground = "url(./img/ucl.jpg)";
+        break;
+      case "uel":
+        newBackground = "url(./img/uel.jpg)";
+        break;
+      case "uecl":
+        newBackground = "url(./img/uecl.jpg)";
+        break;
+      // ... diğer ligler ve turnuvalar için
+      default:
+        newBackground = "url(./img/photo1.jpg)";
+    }
+    
+    body.style.backgroundImage = newBackground;
+  }
+*/
+// Sayfa yüklendiğinde tüm takımları yükle ve ilk filtrelemeyi yap
+window.addEventListener("load", function() {
+    loadAllTeams().then(() => {
+        console.log("Tüm takımlar yüklendi!");
+    }).catch(error => {
+        console.error("Takımlar yüklenirken hata oluştu:", error);
+    });
+});

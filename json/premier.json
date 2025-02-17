@@ -1,0 +1,73 @@
+{
+    "manchester-city": {
+      "name": "Manchester City",
+      "league": "premier-league",
+      "competitions": ["premier-league", "ucl"],
+      "colors": ["#6CABDD", "#1C2C5B"],
+      "initial": "MC"
+    },
+    "manchester-united": {
+      "name": "Manchester United",
+      "league": "premier-league",
+      "competitions": ["premier-league", "uel"],
+      "colors": ["#DA291C", "#DA291C"],
+      "initial": "MU"
+    },
+    "liverpool": {
+      "name": "Liverpool",
+      "league": "premier-league",
+      "competitions": ["premier-league", "ucl"],
+      "colors": ["#C8102E", "#C8102E"],
+      "initial": "L"
+    },
+    "chelsea": {
+      "name": "Chelsea",
+      "league": "premier-league",
+      "competitions": ["premier-league", "uecl"],
+      "colors": ["#034694", "#FFFFFF"],
+      "initial": "CHE"
+    },
+    "arsenal": {
+      "name": "Arsenal",
+      "league": "premier-league",
+      "competitions": ["premier-league", "ucl"],
+      "colors": ["#EF4135", "#FFFFFF"],
+      "initial": "ARS"
+    },
+    "tottenham-hotspur": {
+      "name": "Tottenham Hotspur",
+      "league": "premier-league",
+      "competitions": ["premier-league","uel"],
+      "colors": ["#132257", "#FFFFFF"],
+      "initial": "TH"
+    },
+    "everton": {
+      "name": "Everton",
+      "league": "premier-league",
+      "competitions": ["premier-league"],
+      "colors": ["#003B5C", "#F1A800"],
+      "initial": "EVE"
+    },
+    "leicester-city": {
+      "name": "Leicester City",
+      "league": "premier-league",
+      "competitions": ["premier-league"],
+      "colors": ["#003090", "#FFB81C"],
+      "initial": "LEI"
+    },
+    "west-ham-united": {
+      "name": "West Ham United",
+      "league": "premier-league",
+      "competitions": ["premier-league"],
+      "colors": ["#7A263A", "#00A9E0"],
+      "initial": "WHU"
+    },
+    "aston-villa": {
+      "name": "Aston Villa",
+      "league": "premier-league",
+      "competitions": ["ucl","premier-league"],
+      "colors": ["#670E36", "#006F3C"],
+      "initial": "AV"
+    }
+  }
+  

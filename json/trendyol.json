@@ -1,0 +1,79 @@
+{
+    "galatasaray": {
+      "name": "Galatasaray",
+      "league": "super-lig",
+      "competitions": ["super-lig", "uel"],
+      "colors": ["#F4C300", "#E60000"],
+      "initial": "GS"
+    },
+    "fenerbahce": {
+      "name": "Fenerbahçe",
+      "league": "super-lig",
+      "competitions": ["super-lig", "uel"],
+      "colors": ["#F7A600", "#006B3F"],
+      "initial": "FB"
+    },
+    "besiktas": {
+      "name": "Beşiktaş",
+      "league": "super-lig",
+      "competitions": ["super-lig", "uel"],
+      "colors": ["#000000", "#FFFFFF"],
+      "initial": "BJK"
+    },
+    "trabzonspor": {
+      "name": "Trabzonspor",
+      "league": "super-lig",
+      "competitions": ["super-lig"],
+      "colors": ["#9B1B30", "#003B5C"],
+      "initial": "TS"
+    },
+    "sivasspor": {
+      "name": "Sivasspor",
+      "league": "super-lig",
+      "competitions": ["super-lig"],
+      "colors": ["#B30000", "#FFB81C"],
+      "initial": "SVS"
+    },
+    "antalyaspor": {
+      "name": "Antalyaspor",
+      "league": "super-lig",
+      "competitions": ["super-lig"],
+      "colors": ["#E60000", "#F1C300"],
+      "initial": "AN"
+    },
+    "konyaspor": {
+      "name": "Konyaspor",
+      "league": "super-lig",
+      "competitions": ["super-lig"],
+      "colors": ["#006F3C", "#F1C300"],
+      "initial": "KS"
+    },
+    "alanyaspor": {
+      "name": "Alanyaspor",
+      "league": "super-lig",
+      "competitions": ["super-lig"],
+      "colors": ["#FFA500", "#006F3C"],
+      "initial": "ALY"
+    },
+    "göztepe": {
+      "name": "Göztepe",
+      "league": "super-lig",
+      "competitions": ["super-lig"],
+      "colors": ["#F7A500", "#D10033"],
+      "initial": "GOZ"
+    },
+    "kayserispor": {
+      "name": "Kayserispor",
+      "league": "super-lig",
+      "competitions": ["super-lig"],
+      "colors": ["#FF6F00", "#006E99"],
+      "initial": "KS"
+    },
+    "basaksehir": {
+      "name": "Başakşehir",
+      "league": "super-lig",
+      "competitions": ["super-lig","uecl"],
+      "colors": ["#0C5F4C", "#F4A500"],
+      "initial": "BFK"
+    }
+  }

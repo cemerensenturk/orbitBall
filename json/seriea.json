@@ -1,0 +1,79 @@
+{
+    "juventus": {
+      "name": "Juventus",
+      "league": "serie-a",
+      "competitions": ["serie-a", "ucl"],
+      "colors": ["#F7F7F7", "#000000"],
+      "initial": "J"
+    },
+    "ac-milan": {
+      "name": "AC Milan",
+      "league": "serie-a",
+      "competitions": ["serie-a", "ucl"],
+      "colors": ["#F1C300", "#D10032"],
+      "initial": "ACM"
+    },
+    "inter-milan": {
+      "name": "Inter Milan",
+      "league": "serie-a",
+      "competitions": ["serie-a", "ucl"],
+      "colors": ["#003DA5", "#F5A300"],
+      "initial": "IM"
+    },
+    "as-roma": {
+      "name": "AS Roma",
+      "league": "serie-a",
+      "competitions": ["serie-a","uel"],
+      "colors": ["#9B1B30", "#F7C700"],
+      "initial": "ROM"
+    },
+    "lazio": {
+      "name": "Lazio",
+      "league": "serie-a",
+      "competitions": ["serie-a","uel"],
+      "colors": ["#005AA7", "#FFFFFF"],
+      "initial": "LAZ"
+    },
+    "bologna": {
+      "name": "Bologna",
+      "league": "serie-a",
+      "competitions": ["serie-a","ucl"],
+      "colors": ["#D40000", "#0066B1"],
+      "initial": "BOL"
+    },
+    "napoli": {
+      "name": "Napoli",
+      "league": "serie-a",
+      "competitions": ["serie-a"],
+      "colors": ["#0A6E9C", "#F1C300"],
+      "initial": "NAP"
+    },
+    "fiorentina": {
+      "name": "Fiorentina",
+      "league": "serie-a",
+      "competitions": ["serie-a","uecl"],
+      "colors": ["#5D1F67", "#FFFFFF"],
+      "initial": "FIO"
+    },
+    "atalanta": {
+      "name": "Atalanta",
+      "league": "serie-a",
+      "competitions": ["serie-a", "ucl"],
+      "colors": ["#1E2A8A", "#9B1F30"],
+      "initial": "ATA"
+    },
+    "torino": {
+      "name": "Torino",
+      "league": "serie-a",
+      "competitions": ["serie-a"],
+      "colors": ["#9A1F33", "#FFFFFF"],
+      "initial": "TOR"
+    },
+    "sampdoria": {
+      "name": "Sampdoria",
+      "league": "serie-a",
+      "competitions": ["serie-a"],
+      "colors": ["#1E2D8C", "#D10033"],
+      "initial": "SMP"
+    }
+  }
