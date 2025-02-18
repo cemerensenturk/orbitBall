@@ -1,6 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+const whistleSound = new Audio('./sounds/whistle.mp3');
+const goalSound = new Audio('./sounds/goal.mp3');
+
 canvas.width = 400;
 canvas.height = 400;
 
@@ -89,6 +92,8 @@ function startGame() {
 
     document.getElementById("goal-history").innerHTML = "<h3>Goal History</h3>";
 
+    whistleSound.play();
+
     gameRunning = true;
     score = [0, 0];
     time = 0;
@@ -172,29 +177,50 @@ function filterTeams() {
         team2Select.value = team2Current;
     }
 
-    //changeBackground(selectedCategory);
+    changeBackground(selectedCategory);
 }
 
 function drawGoal() {
     let radian = (goal.angle * Math.PI) / 180;
 
-    // Kale merkezinin konumunu, orijinden uzaklık ve açı ile hesapla
+    // Kale merkezinin konumunu hesapla
     goal.x = 200 + Math.cos(radian) * goalRadius;
     goal.y = 200 + Math.sin(radian) * goalRadius;
 
-    // Kaleyi çizme
-    ctx.save(); // Mevcut çizim durumunu kaydet
-    ctx.translate(goal.x, goal.y); // Kale merkezini hedefe yerleştir
-    ctx.rotate(radian); // Kalenin döndürülmesi
+    ctx.save();
+    ctx.translate(goal.x, goal.y);
+    
+    // Kalenin açısını, merkeze bakacak şekilde ayarla
+    let angleToCenter = Math.atan2(200 - goal.y, 200 - goal.x);
+    ctx.rotate(angleToCenter);
 
-    // Kaleyi çizme (kalenin uzun kenarı orijine bakacak şekilde)
+    // Kalenin arka plan kısmı (isteğe bağlı, ağ etkisi için)
     ctx.beginPath();
     ctx.rect(-goalWidth / 2, -goalHeight / 2, goalWidth, goalHeight);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.5)"; // Yarı saydam beyaz (ağ etkisi)
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(-goalWidth / 2, -goalHeight / 2, goalWidth, 3);
     ctx.fillStyle = "white";
     ctx.fill();
     ctx.closePath();
 
-    ctx.restore(); // Çizim durumunu geri al
+    ctx.beginPath();
+    ctx.rect(-goalWidth / 2, -goalHeight / 2, 3, goalHeight);
+    ctx.fillStyle = "white";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(-goalWidth / 2, goalHeight / 2 - 3, goalWidth, 3);
+    ctx.fillStyle = "white";
+    ctx.fill();
+    ctx.closePath();
+
+
+    ctx.restore();
 }
 
 function updateGoalAngle() {
@@ -242,8 +268,8 @@ function updatePositions() {
         team.y += team.dy;
         
         if (Math.random() < 0.02) { // Küçük rastgele yön sapmaları ekleyerek doğrusal hareketi kırıyoruz
-            team.dx += (Math.random() - 0.5) * 0.5;
-            team.dy += (Math.random() - 0.5) * 0.5;
+            team.dx += (Math.random() - 0.5) * 0.2;
+            team.dy += (Math.random() - 0.5) * 0.2;
         }
 
         let distance = Math.hypot(team.x - goal.x, team.y - goal.y);
@@ -255,6 +281,8 @@ function updatePositions() {
                 score[1]++;
                 updateScore(team2.initial);
             }
+
+            goalSound.play();
             
             // Oyunu duraklatıyoruz
             gameRunning = false;
@@ -268,7 +296,7 @@ function updatePositions() {
                     gameRunning = true;
                     gameLoop();
                 }
-            }, 1000);
+            }, 3000);
         }
 
         // Sahadan çıkmasını engelliyoruz
@@ -343,6 +371,7 @@ function updateTime() {
         // 90. dakikada oyunu durduruyoruz
         clearInterval(timeInterval);
         gameRunning = false;
+        whistleSound.play();
     }
 }
 
@@ -351,13 +380,16 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.arc(200, 200, 180, 0, Math.PI * 2);
+    ctx.strokeStyle = "white";
     ctx.stroke();
+    
     drawGoal();
     drawTeams();
     updatePositions();
     requestAnimationFrame(gameLoop);
 }
-/*
+
+
 function changeBackground(category) {
     const body = document.body;
     
@@ -368,41 +400,19 @@ function changeBackground(category) {
     let newBackground = "url(./img/photo1.jpg)";
     
     switch(category) {
-      case "premier-league":
-        newBackground = "url(./img/premier_league.jpg)";
-        break;
-      case "la-liga":
-        newBackground = "url(./img/la_liga.jpg)";
-        break;
-      case "bundesliga":
-        newBackground = "url(./img/bundesliga.jpg)";
-        break;
-      case "serie-a":
-        newBackground = "url(./img/serie-a.jpg)";
-        break;
-      case "ligue-1":
-        newBackground = "url(./img/ligue_1.jpg)";
-        break;
-      case "super-lig":
-        newBackground = "url(./img/superlig.jpg)";
-        break;
       case "ucl":
         newBackground = "url(./img/ucl.jpg)";
         break;
       case "uel":
         newBackground = "url(./img/uel.jpg)";
         break;
-      case "uecl":
-        newBackground = "url(./img/uecl.jpg)";
-        break;
-      // ... diğer ligler ve turnuvalar için
       default:
         newBackground = "url(./img/photo1.jpg)";
     }
     
     body.style.backgroundImage = newBackground;
   }
-*/
+
 // Sayfa yüklendiğinde tüm takımları yükle ve ilk filtrelemeyi yap
 window.addEventListener("load", function() {
     loadAllTeams().then(() => {

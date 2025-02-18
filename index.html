@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="control-center">
-        <h1>OrbitBall by Kafeinal</h1>
+        <h1>OrbitBall</h1>
         <div class="team-selection">
             <div class="filter-section">
                 <label for="filter-category">League:</label>
@@ -32,24 +32,25 @@
             </div>
             <label for="team1">Team 1:
                 <select id="team1-select">
-                    
                 </select>
             </label>
 
             <label for="team2">Team 2:
                 <select id="team2-select">
-                    
                 </select>
             </label>
-
             <button class="startGame" onclick="startGame()">Start Game</button>
+            <div class="scoreboard">
+                <p>Score: <span id="score">0 - 0</span></p>
+                <p>Time: <span id="time">1</span>. minute</p>
+            </div>
+            
+
         </div>
 
-        <p>Score: <span id="score">0 - 0</span></p>
         <div id="goal-history">
             <h3>Goal History</h3>
         </div>        
-        <p>Time: <span id="time">1</span>. minute</p>
         <a class="cemerendev" href="http://www.cemeren.dev">cemeren.dev</a>
     </div>
     <canvas id="gameCanvas"></canvas>
