@@ -8,7 +8,15 @@ canvas.width = 400;
 canvas.height = 400;
 
 function getRandomSpeed() {
-    return (Math.random() - 0.5) * 3;
+    const minSpeed = 1.0; // Minimum hız
+    let speed = (Math.random() - 0.5) * 3;
+    
+    // Hızın mutlak değeri minimum hızdan küçükse, işaretini koruyarak minimum hıza çek
+    if (Math.abs(speed) < minSpeed) {
+        speed = speed < 0 ? -minSpeed : minSpeed;
+    }
+    
+    return speed;
 }
 
 let team1 = { x: 170, y: 200, dx: getRandomSpeed(), dy: getRandomSpeed()};
@@ -18,29 +26,11 @@ let score = [0, 0];
 let time = 0;
 let timeInterval;
 let gameRunning = false;
-let ballRadius = 20;
-let goalWidth = 15;  // Kale genişliği
-let goalHeight = 50; // Kale yüksekliği
+let ballRadius = 30;
+let goalWidth = 25;  // Kale genişliği
+let goalHeight = 70; // Kale yüksekliği
 let goalRadius = 180; // Kale merkezinin dönme mesafesi
 
-// Kategorileri tanımlayalım
-const categories = {
-    // Ligler
-    "premier-league": "Premier League",
-    "la-liga": "La Liga",
-    "bundesliga": "Bundesliga",
-    "serie-a": "Serie A",
-    "ligue-1": "Ligue 1",
-    "super-lig": "Trendyol Süper Lig",
-    
-    // Turnuvalar
-    "ucl": "UEFA Champions League",
-    "uel": "UEFA Europa League",
-    "uecl": "UEFA Conference League",
-    
-    // Özel kategoriler
-    "all": "All Teams"
-};
 
 // Takımları yüklemek için temsili bir nesne
 let teamsDatabase = {};
@@ -79,6 +69,8 @@ async function loadAllTeams() {
 
 function startGame() {
     if (gameRunning) return;
+
+    resizeCanvas();
 
     let team1Name = document.getElementById("team1-select").value;
     let team2Name = document.getElementById("team2-select").value;
@@ -131,6 +123,51 @@ function drawTeams() {
     drawDualColorCircle(team1.x, team1.y, ballRadius, team1.color, team1.initial);
     drawDualColorCircle(team2.x, team2.y, ballRadius, team2.color, team2.initial);
 }
+
+function changeBackground(category) {
+    const canvas = document.getElementById("gameCanvas");
+    
+    // Önce mevcut geçiş animasyonu tamamlansın
+    canvas.style.transition = "background-image 1s ease";
+    
+    // Kategori/lige göre arkaplan resmini belirle
+    let newBackground = "url(./img/rota.png)";
+    
+    switch(category) {
+      case "premier-league":
+        newBackground = "url(./img/pl.png)";
+        break;
+      case "la-liga":
+        newBackground = "url(./img/ll.png)";
+        break;
+      case "bundesliga":
+        newBackground = "url(./img/bl.png)";
+        break;
+      case "super-lig":
+        newBackground = "url(./img/tsl.png)";
+        break;
+      case "serie-a":
+        newBackground = "url(./img/sa.png)";
+        break;
+      case "ligue-1":
+        newBackground = "url(./img/l1.png)";
+        break;
+      case "ucl":
+        newBackground = "url(./img/ucl.png)";
+        break;
+      case "uel":
+        newBackground = "url(./img/uel.png)";
+        break;
+      case "uecl":
+        newBackground = "url(./img/uecl.png)";
+        break;
+
+      default:
+        newBackground = "url(./img/rota.png)";
+    }
+    
+    canvas.style.backgroundImage = newBackground;
+  }
 
 function filterTeams() {
     const selectedCategory = document.getElementById("filter-category").value;
@@ -273,7 +310,7 @@ function updatePositions() {
         }
 
         let distance = Math.hypot(team.x - goal.x, team.y - goal.y);
-        if (distance < 25 && Math.random() < 0.1) { 
+        if (distance < 25 && Math.random() < 0.6) { 
             if (team === team1) {
                 score[0]++;
                 updateScore(team1.initial);
@@ -305,6 +342,11 @@ function updatePositions() {
             let angle = Math.atan2(team.y - 200, team.x - 200);
             team.dx = -Math.cos(angle) * 2;
             team.dy = -Math.sin(angle) * 2;
+
+            // Duvar çarpışma efekti ekle
+            let wallX = 200 + Math.cos(angle) * 180;
+            let wallY = 200 + Math.sin(angle) * 180;
+            addCollisionEffect(wallX, wallY, "wall");
         }
     });
 
@@ -316,50 +358,113 @@ function updatePositions() {
 }
 
 function resetPositions() {
-    team1.x = 170;
-    team1.y = 200;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    team1.x = centerX - 30;
+    team1.y = centerY;
     team1.dx = getRandomSpeed();
     team1.dy = getRandomSpeed();
 
-    team2.x = 230;
-    team2.y = 200;
+    team2.x = centerX + 30;
+    team2.y = centerY;
     team2.dx = getRandomSpeed();
     team2.dy = getRandomSpeed();
 
     goal.angle = 0;
 }
 
+// Çarpışma efekti için değişkenler
+let collisionEffects = [];
+
+function addCollisionEffect(x, y, type) {
+    let effect = {
+        x: x,
+        y: y,
+        type: type, // "wall" veya "ball"
+        radius: type === "wall" ? 5 : 10,
+        alpha: 1.0,
+        color: type === "wall" ? "#ffffff" : "#ffcc00"
+    };
+    collisionEffects.push(effect);
+}
+
+function updateAndDrawEffects() {
+    for (let i = collisionEffects.length - 1; i >= 0; i--) {
+        let effect = collisionEffects[i];
+        
+        // Efektin boyutunu ve saydamlığını güncelle
+        effect.radius += 0.7;
+        effect.alpha -= 0.05;
+        
+        // Efekti çiz
+        ctx.beginPath();
+        ctx.arc(effect.x, effect.y, effect.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${effect.type === "wall" ? "255,255,255" : "255,204,0"},${effect.alpha})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Kaybolmuş efektleri kaldır
+        if (effect.alpha <= 0) {
+            collisionEffects.splice(i, 1);
+        }
+    }
+}
+
+// Oyun değişkenleri arasına bu değişkenleri ekleyelim
+let minDeflectionAngle = 0.15;  // Minimum sapma açısı (radyan)
+let maxDeflectionAngle = 0.45;  // Maksimum sapma açısı (radyan)
+
 function handleCollision(ball1, ball2) {
     let dx = ball2.x - ball1.x;
     let dy = ball2.y - ball1.y;
     let distance = Math.hypot(dx, dy);
-    let minDistance = 30;
+    let minDistance = 50;
 
     if (distance < minDistance) {
+        // Çarpışma başına rastgele sapma açıları üret
+        // Her çarpışmada farklı açılar kullanarak hareketin doğrusallığını kır
+        let random1 = minDeflectionAngle + Math.random() * (maxDeflectionAngle - minDeflectionAngle);
+        let random2 = minDeflectionAngle + Math.random() * (maxDeflectionAngle - minDeflectionAngle);
+        
+        // Açıları pozitif veya negatif yapma şansı
+        random1 *= Math.random() > 0.5 ? 1 : -1;
+        random2 *= Math.random() > 0.5 ? 1 : -1;
+        
+        // Çarpışma açısını hesapla
         let angle = Math.atan2(dy, dx);
-
-        // Hız vektörlerinin büyüklüğünü hesapla
+        
+        // Hızların büyüklüğünü hesapla
         let speed1 = Math.hypot(ball1.dx, ball1.dy);
         let speed2 = Math.hypot(ball2.dx, ball2.dy);
         
-        // Çarpışma sonrası her iki topun hızlarının tersine dönmesini sağla
-        let newDx1 = Math.cos(angle + Math.PI) * speed1; // Ball1 tersine dönmeli
-        let newDy1 = Math.sin(angle + Math.PI) * speed1;
+        // Yeni hızları ata - dinamik açı eklemeli
+        ball1.dx = Math.cos(angle + Math.PI + random1) * speed1 * 1.05;
+        ball1.dy = Math.sin(angle + Math.PI + random1) * speed1 * 1.05;
         
-        let newDx2 = Math.cos(angle) * speed2; // Ball2 tersine dönmeli
-        let newDy2 = Math.sin(angle) * speed2;
-
-        // Yeni hızları ata
-        ball1.dx = newDx1;
-        ball1.dy = newDy1;
-        ball2.dx = newDx2;
-        ball2.dy = newDy2;
-
-        // Küçük bir rastgele sapma ekleyerek daha doğal bir hareket sağlayalım
-        ball1.dx += (Math.random() - 0.5) * 0.5;
-        ball1.dy += (Math.random() - 0.5) * 0.5;
-        ball2.dx += (Math.random() - 0.5) * 0.5;
-        ball2.dy += (Math.random() - 0.5) * 0.5;
+        ball2.dx = Math.cos(angle + random2) * speed2 * 1.05;
+        ball2.dy = Math.sin(angle + random2) * speed2 * 1.05;
+        
+        // Sabit çarpışma döngüsünden kaçınmak için hafif rastgele sapma
+        ball1.dx += (Math.random() - 0.5) * 0.8;
+        ball1.dy += (Math.random() - 0.5) * 0.8;
+        ball2.dx += (Math.random() - 0.5) * 0.8;
+        ball2.dy += (Math.random() - 0.5) * 0.8;
+        
+        // Topları birbirinden uzaklaştır (çakışmayı önle)
+        let overlap = minDistance - distance;
+        let adjustX = (overlap * dx) / distance * 0.5;
+        let adjustY = (overlap * dy) / distance * 0.5;
+        
+        ball1.x -= adjustX;
+        ball1.y -= adjustY;
+        ball2.x += adjustX;
+        ball2.y += adjustY;
+        
+        // Top çarpışma efekti ekle
+        let collisionX = (ball1.x + ball2.x) / 2;
+        let collisionY = (ball1.y + ball2.y) / 2;
+        addCollisionEffect(collisionX, collisionY, "ball");
     }
 }
 
@@ -378,42 +483,55 @@ function updateTime() {
 function gameLoop() {
     if (!gameRunning) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw field circle with dynamic radius based on canvas size
+    const fieldRadius = Math.min(canvas.width, canvas.height) * 0.45;
     ctx.beginPath();
-    ctx.arc(200, 200, 180, 0, Math.PI * 2);
+    ctx.arc(canvas.width/2, canvas.height/2, fieldRadius, 0, Math.PI * 2);
     ctx.strokeStyle = "white";
     ctx.stroke();
     
     drawGoal();
     drawTeams();
     updatePositions();
+    updateAndDrawEffects(); // Efektleri çiz
     requestAnimationFrame(gameLoop);
 }
 
-
-function changeBackground(category) {
-    const body = document.body;
+// Add this new function to handle responsive canvas
+function resizeCanvas() {
+    const isMobile = window.innerWidth <= 768;
     
-    // Önce mevcut geçiş animasyonu tamamlansın
-    body.style.transition = "background-image 1s ease";
-    
-    // Kategori/lige göre arkaplan resmini belirle
-    let newBackground = "url(./img/photo1.jpg)";
-    
-    switch(category) {
-      case "ucl":
-        newBackground = "url(./img/ucl.jpg)";
-        break;
-      case "uel":
-        newBackground = "url(./img/uel.jpg)";
-        break;
-      default:
-        newBackground = "url(./img/photo1.jpg)";
+    if (isMobile) {
+        // On mobile, make the canvas square and fit the viewport width
+        const size = Math.min(window.innerWidth * 0.95, 400);
+        canvas.width = size;
+        canvas.height = size;
+        
+        // Adjust game elements for the new canvas size
+        goalRadius = size * 0.45;  // 45% of canvas size
+        ballRadius = size * 0.075; // 7.5% of canvas size
+        goalWidth = size * 0.0625; // 6.25% of canvas size  
+        goalHeight = size * 0.175; // 17.5% of canvas size
+    } else {
+        // On desktop, use original dimensions
+        canvas.width = 400;
+        canvas.height = 400;
+        goalRadius = 180;
+        ballRadius = 30;
+        goalWidth = 25;
+        goalHeight = 70;
     }
-    
-    body.style.backgroundImage = newBackground;
-  }
+}
 
-// Sayfa yüklendiğinde tüm takımları yükle ve ilk filtrelemeyi yap
+// Add window resize event listener
+window.addEventListener('resize', function() {
+    if (gameRunning) {
+        // If game is running, handle resize
+        resizeCanvas();
+    }
+});
+
 window.addEventListener("load", function() {
     loadAllTeams().then(() => {
         console.log("Tüm takımlar yüklendi!");
