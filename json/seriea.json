@@ -1,79 +1,142 @@
 {
-    "juventus": {
-      "name": "Juventus",
-      "league": "serie-a",
-      "competitions": ["serie-a", "ucl"],
-      "colors": ["#F7F7F7", "#000000"],
-      "initial": "J"
-    },
-    "ac-milan": {
-      "name": "AC Milan",
-      "league": "serie-a",
-      "competitions": ["serie-a", "ucl"],
-      "colors": ["#F1C300", "#D10032"],
-      "initial": "ACM"
-    },
-    "inter-milan": {
-      "name": "Inter Milan",
-      "league": "serie-a",
-      "competitions": ["serie-a", "ucl"],
-      "colors": ["#003DA5", "#F5A300"],
-      "initial": "IM"
-    },
-    "as-roma": {
-      "name": "AS Roma",
-      "league": "serie-a",
-      "competitions": ["serie-a","uel"],
-      "colors": ["#9B1B30", "#F7C700"],
-      "initial": "ROM"
-    },
-    "lazio": {
-      "name": "Lazio",
-      "league": "serie-a",
-      "competitions": ["serie-a","uel"],
-      "colors": ["#005AA7", "#FFFFFF"],
-      "initial": "LAZ"
-    },
-    "bologna": {
-      "name": "Bologna",
-      "league": "serie-a",
-      "competitions": ["serie-a","ucl"],
-      "colors": ["#D40000", "#0066B1"],
-      "initial": "BOL"
-    },
-    "napoli": {
-      "name": "Napoli",
-      "league": "serie-a",
-      "competitions": ["serie-a"],
-      "colors": ["#0A6E9C", "#F1C300"],
-      "initial": "NAP"
-    },
-    "fiorentina": {
-      "name": "Fiorentina",
-      "league": "serie-a",
-      "competitions": ["serie-a","uecl"],
-      "colors": ["#5D1F67", "#FFFFFF"],
-      "initial": "FIO"
-    },
-    "atalanta": {
-      "name": "Atalanta",
-      "league": "serie-a",
-      "competitions": ["serie-a", "ucl"],
-      "colors": ["#1E2A8A", "#9B1F30"],
-      "initial": "ATA"
-    },
-    "torino": {
-      "name": "Torino",
-      "league": "serie-a",
-      "competitions": ["serie-a"],
-      "colors": ["#9A1F33", "#FFFFFF"],
-      "initial": "TOR"
-    },
-    "sampdoria": {
-      "name": "Sampdoria",
-      "league": "serie-a",
-      "competitions": ["serie-a"],
-      "colors": ["#1E2D8C", "#D10033"],
-      "initial": "SMP"
-    }
+  "juventus": {
+    "name": "Juventus FC",
+    "league": "serie-a",
+    "competitions": ["serie-a", "ucl"],
+    "colors": ["#FFFFFF", "#000000"],
+    "initial": "JUV"
+  },
+  "ac-milan": {
+    "name": "AC Milan",
+    "league": "serie-a",
+    "competitions": ["serie-a", "ucl"],
+    "colors": ["#FB090B", "#000000"],
+    "initial": "MIL"
+  },
+  "inter-milan": {
+    "name": "FC Internazionale Milano",
+    "league": "serie-a",
+    "competitions": ["serie-a", "ucl"],
+    "colors": ["#0066B3", "#000000"],
+    "initial": "INT"
+  },
+  "as-roma": {
+    "name": "AS Roma",
+    "league": "serie-a",
+    "competitions": ["serie-a", "uel"],
+    "colors": ["#A50044", "#F98E2B"],
+    "initial": "ROM"
+  },
+  "lazio": {
+    "name": "SS Lazio",
+    "league": "serie-a",
+    "competitions": ["serie-a", "uel"],
+    "colors": ["#87CEEB", "#FFFFFF"],
+    "initial": "LAZ"
+  },
+  "bologna": {
+    "name": "Bologna FC",
+    "league": "serie-a",
+    "competitions": ["serie-a", "ucl"],
+    "colors": ["#C9072A", "#1A2F48"],
+    "initial": "BOL"
+  },
+  "napoli": {
+    "name": "SSC Napoli",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#00A0DF", "#FFFFFF"],
+    "initial": "NAP"
+  },
+  "fiorentina": {
+    "name": "ACF Fiorentina",
+    "league": "serie-a",
+    "competitions": ["serie-a", "uecl"],
+    "colors": ["#7D2548", "#FFFFFF"],
+    "initial": "FIO"
+  },
+  "atalanta": {
+    "name": "Atalanta BC",
+    "league": "serie-a",
+    "competitions": ["serie-a", "ucl"],
+    "colors": ["#1E71B8", "#000000"],
+    "initial": "ATA"
+  },
+  "torino": {
+    "name": "Torino FC",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#8A1E03", "#FFFFFF"],
+    "initial": "TOR"
+  },
+  "genoa": {
+    "name": "Genoa CFC",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#AD1919", "#00558C"],
+    "initial": "GEN"
+  },
+  "monza": {
+    "name": "AC Monza",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#E62333", "#FFFFFF"],
+    "initial": "MON"
+  },
+  "hellas-verona": {
+    "name": "Hellas Verona FC",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#FFDD00", "#0000FF"],
+    "initial": "VER"
+  },
+  "cagliari": {
+    "name": "Cagliari Calcio",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#B01131", "#0033A0"],
+    "initial": "CAG"
+  },
+  "lecce": {
+    "name": "US Lecce",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#FFD700", "#9F1C31"],
+    "initial": "LEC"
+  },
+  "udinese": {
+    "name": "Udinese Calcio",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#000000", "#FFFFFF"],
+    "initial": "UDI"
+  },
+  "empoli": {
+    "name": "Empoli FC",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#0066CC", "#FFFFFF"],
+    "initial": "EMP"
+  },
+  "como": {
+    "name": "Como 1907",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#273B89", "#FFFFFF"],
+    "initial": "COM"
+  },
+  "parma": {
+    "name": "Parma Calcio 1913",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#FFDD00", "#1A3B80"],
+    "initial": "PAR"
+  },
+  "venezia": {
+    "name": "Venezia FC",
+    "league": "serie-a",
+    "competitions": ["serie-a"],
+    "colors": ["#F1752D", "#006A44"],
+    "initial": "VEN"
   }
+}

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
+::selection{
+    color: #ffffff;
+    background-color: #4c8527;
+}
+
 body {
     text-align: center;
     font-family: 'Inter', sans-serif;
@@ -23,6 +28,9 @@ h1 {
     font-weight: 600;
     font-size: 24px;
     margin: 5px;
+    color: #4c8527;
+    border: 1px dashed #4c8527;
+    border-radius: 8px;
 }
 
 p {
@@ -40,7 +48,7 @@ label{
     width: 380px;
     margin: auto;
     padding: 8px;
-    border: 2px solid #222;
+    border: 2px solid #4c8527;
     border-radius: 12px;
     margin-top: 1%;
     margin-bottom: 1%;
@@ -57,7 +65,7 @@ select {
     font-size: 13px;
     padding: 2px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #4c8527;
     background-color: #fff;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -101,9 +109,9 @@ button:active {
 #goal-history {
     max-height: 55px;
     overflow-y: auto;
-    margin: 6px;
+    /* margin: 6px; */
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px dashed #4c8527;
     border-radius: 8px;
     background-color: #ffffff;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -116,23 +124,60 @@ button:active {
     border-bottom: 1px solid #ddd;
 }
 
-.cemerendev {
+.sticky-icon{
+	z-index:1;
+	position:fixed;
+	top:30%;
+	left:0%;
+	width:160px;
+	display:flex;
+	flex-direction:column;
+}  
+
+.sticky-icon a {
+    transform: translate(-110px, 0px);
+    border-radius: 0px 50px 50px 0px;
+    text-align: left;
+    margin: 2px;
     text-decoration: none;
-    color: white;
-    background-color: black;
-    padding: 4px 7px;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    font-size: 12px;
+    padding: 10px;
+    font-size: 14px;
+    transition: all 0.8s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.cemerendev:hover {
-    background-color: #333;
+.sticky-icon a:hover{
+	color:#FFF;
+	transform:translate(0px,0px);
+    font-weight: bold;
+}	
+
+.sticky-icon a:hover i{
+	transform:rotate(360deg);
+}
+
+.main-website{
+	background-color:#4c8527;
+	color:#FFF;
+}
+	
+.sticky-icon a img{
+	max-width: 32px;
 }
 
 @media (max-width: 768px) {
     body {
         background-size: auto; 
+    }
+
+    canvas {
+        margin-top: 10px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 5px;
     }
 }

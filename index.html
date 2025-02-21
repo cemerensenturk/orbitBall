@@ -31,31 +31,32 @@
                     </optgroup>
                 </select>
             </div>
-            <label for="team1">Team 1:
+            <label for="team1">Home:
                 <select id="team1-select">
                 </select>
             </label>
 
-            <label for="team2">Team 2:
+            <label for="team2">Away:
                 <select id="team2-select">
                 </select>
             </label>
             <button class="startGame" onclick="startGame()">Start Game</button>
             <div class="scoreboard">
                 <p>Score: <span id="score">0 - 0</span></p>
-                <p>Time: <span id="time">1</span>. minute</p>
+                <p>Time: <span id="time">1</span>'</p>
             </div>
-            
-
         </div>
-
         <div id="goal-history">
             <h3>Goal History</h3>
         </div>        
-        <a class="cemerendev" href="http://www.cemeren.dev">cemeren.dev</a>
     </div>
     <canvas id="gameCanvas"></canvas>
 
+    <div class="sticky-icon">
+        <a href="https://cemeren.dev" class="main-website">
+            <div>cemeren.dev</div><img src="./img/as-removebg-preview.png">
+        </a>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

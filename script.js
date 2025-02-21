@@ -8,15 +8,9 @@ canvas.width = 400;
 canvas.height = 400;
 
 function getRandomSpeed() {
-    const minSpeed = 1.0; // Minimum hız
-    let speed = (Math.random() - 0.5) * 3;
-    
-    // Hızın mutlak değeri minimum hızdan küçükse, işaretini koruyarak minimum hıza çek
-    if (Math.abs(speed) < minSpeed) {
-        speed = speed < 0 ? -minSpeed : minSpeed;
-    }
-    
-    return speed;
+    const minSpeed = 1.0;
+    const speed = (Math.random() * 2 - 1) * 3;
+    return Math.sign(speed) * Math.max(Math.abs(speed), minSpeed);
 }
 
 let team1 = { x: 170, y: 200, dx: getRandomSpeed(), dy: getRandomSpeed()};
@@ -30,7 +24,6 @@ let ballRadius = 30;
 let goalWidth = 25;  // Kale genişliği
 let goalHeight = 70; // Kale yüksekliği
 let goalRadius = 180; // Kale merkezinin dönme mesafesi
-
 
 // Takımları yüklemek için temsili bir nesne
 let teamsDatabase = {};
@@ -310,7 +303,7 @@ function updatePositions() {
         }
 
         let distance = Math.hypot(team.x - goal.x, team.y - goal.y);
-        if (distance < 25 && Math.random() < 0.6) { 
+        if (distance < 25 && Math.random() < 0.4) { 
             if (team === team1) {
                 score[0]++;
                 updateScore(team1.initial);
@@ -390,30 +383,30 @@ function addCollisionEffect(x, y, type) {
 }
 
 function updateAndDrawEffects() {
+    ctx.beginPath();
     for (let i = collisionEffects.length - 1; i >= 0; i--) {
         let effect = collisionEffects[i];
-        
-        // Efektin boyutunu ve saydamlığını güncelle
         effect.radius += 0.7;
         effect.alpha -= 0.05;
         
-        // Efekti çiz
-        ctx.beginPath();
+        ctx.moveTo(effect.x + effect.radius, effect.y);
         ctx.arc(effect.x, effect.y, effect.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(${effect.type === "wall" ? "255,255,255" : "255,204,0"},${effect.alpha})`;
-        ctx.lineWidth = 2;
-        ctx.stroke();
         
-        // Kaybolmuş efektleri kaldır
         if (effect.alpha <= 0) {
             collisionEffects.splice(i, 1);
         }
+    }
+    
+    if (collisionEffects.length > 0) {
+        ctx.strokeStyle = `rgba(255,204,0,0.5)`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
     }
 }
 
 // Oyun değişkenleri arasına bu değişkenleri ekleyelim
 let minDeflectionAngle = 0.15;  // Minimum sapma açısı (radyan)
-let maxDeflectionAngle = 0.45;  // Maksimum sapma açısı (radyan)
+let maxDeflectionAngle = 0.65;  // Maksimum sapma açısı (radyan)
 
 function handleCollision(ball1, ball2) {
     let dx = ball2.x - ball1.x;
